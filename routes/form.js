@@ -2,52 +2,66 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const crypto = require('crypto');
 const uuidv4 = () => crypto.randomUUID();
 const db = require('../database');
 
-// Multer storage config
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads'));
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `upload_${Date.now()}_${uuidv4().slice(0, 8)}${ext}`);
-  }
-});
+// Locate writeable uploads directory for local and Vercel environments
+function getUploadDir() {
+  const isVercel = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+  const dir = isVercel
+    ? path.join('/tmp', 'uploads')
+    : path.join(__dirname, '../uploads');
+  try {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  } catch (e) {}
+  return dir;
+}
 
-const fileFilter = (req, file, cb) => {
-  const allowed = ['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg', '.zip'];
-  const ext = path.extname(file.originalname).toLowerCase();
-  if (allowed.includes(ext) || !ext) {
-    cb(null, true);
-  } else {
-    cb(null, true);
-  }
-};
-
+// Use memoryStorage for fail-proof serverless compatibility
 const upload = multer({
-  storage,
-  fileFilter,
-  limits: { fileSize: 15 * 1024 * 1024 } // 15MB
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => cb(null, true),
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
 });
 
 // POST /api/submit
-router.post('/submit', upload.any(), (req, res) => {
-  try {
-    const body = req.body;
-    const files = req.files || [];
-    
-    const id = uuidv4();
-    const responsesJson = JSON.stringify({
-      answers: body,
-      files: files.map(f => ({ fieldname: f.fieldname, originalname: f.originalname, filename: f.filename }))
-    });
+router.post('/submit', (req, res) => {
+  upload.any()(req, res, (uploadErr) => {
+    if (uploadErr) {
+      console.error('Upload middleware error:', uploadErr);
+      return res.status(400).json({ error: uploadErr.message || 'File upload failed. Max file size is 10MB.' });
+    }
+
+    try {
+      const body = req.body || {};
+      const files = req.files || [];
+      const id = uuidv4();
 
     const resumeFile = files.find(f => f.fieldname === 'resume' || f.fieldname.toLowerCase().includes('resume') || f.fieldname.toLowerCase().includes('file'));
-    const resumePath = resumeFile ? resumeFile.filename : null;
-    const resumeOriginalName = resumeFile ? resumeFile.originalname : null;
+    let resumePath = null;
+    let resumeOriginalName = null;
+    let resumeBase64 = null;
+
+    if (resumeFile) {
+      resumeOriginalName = resumeFile.originalname;
+      const ext = path.extname(resumeFile.originalname) || '.pdf';
+      resumePath = `upload_${Date.now()}_${uuidv4().slice(0, 8)}${ext}`;
+      if (resumeFile.buffer) {
+        resumeBase64 = resumeFile.buffer.toString('base64');
+        try {
+          const targetPath = path.join(getUploadDir(), resumePath);
+          fs.writeFileSync(targetPath, resumeFile.buffer);
+        } catch (e) {}
+      }
+    }
+
+    const responsesJson = JSON.stringify({
+      answers: body,
+      resume_base64: resumeBase64,
+      files: files.map(f => ({ fieldname: f.fieldname, originalname: f.originalname, filename: resumePath }))
+    });
 
     // Helper to find field value flexibly
     const findField = (keys) => {
@@ -96,6 +110,7 @@ router.post('/submit', upload.any(), (req, res) => {
     console.error('Submit error:', err);
     res.status(500).json({ error: 'Internal server error. Please try again.' });
   }
+  });
 });
 
 module.exports = router;
