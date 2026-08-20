@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Submitted — Thank You!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
+    .success-card { max-width: 520px; width: 100%; padding: 48px 40px; text-align: center; }
+    .success-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 40px rgba(74,222,128,0.4);
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes popIn { from { opacity:0; transform: scale(0.4); } to { opacity:1; transform: scale(1); } }
+    .success-icon svg { width: 40px; height: 40px; color: #fff; }
+    h1 { font-size: 32px; margin-bottom: 12px; animation: fadeUp 0.5s 0.15s both; }
+    .success-subtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 32px; animation: fadeUp 0.5s 0.25s both; }
+    .success-name { color: var(--accent-blue); }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform:none; } }
+    .info-box {
+      background: rgba(79,142,247,0.08);
+      border: 1px solid rgba(79,142,247,0.2);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 28px;
+      text-align: left;
+      animation: fadeUp 0.5s 0.35s both;
+    }
+    .info-box h3 { font-size: 15px; color: var(--accent-blue); margin-bottom: 10px; }
+    .info-box ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .info-box li { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+    .info-box li::before { content: '✓'; color: var(--success); font-weight: 900; flex-shrink: 0; }
+    .action-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.5s 0.45s both; }
+    .confetti { position: fixed; pointer-events: none; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+    .success-card { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+  <canvas class="confetti" id="confettiCanvas"></canvas>
+
+  <div class="glass-card success-card">
+    <div class="success-icon">
+      <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <h1>Application <span class="gradient-text">Submitted!</span></h1>
+    <p class="success-subtitle">
+      Thank you, <span class="success-name" id="applicantName"></span>! 🎉<br>
+      Your registration has been received successfully.
+    </p>
+
+    <div class="info-box">
+      <h3>📋 What happens next?</h3>
+      <ul>
+        <li>Our team will review your application within 2–3 business days</li>
+        <li>You'll receive an email confirmation shortly</li>
+        <li>Shortlisted candidates will be contacted for the next steps</li>
+        <li>Keep an eye on your phone and email inbox</li>
+      </ul>
+    </div>
+
+    <div class="action-btns">
+      <a href="/" class="btn btn-secondary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Submit Another
+      </a>
+      <button class="btn btn-primary" onclick="shareForm()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share This Form
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Set applicant name from URL
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name') || 'Applicant';
+    document.getElementById('applicantName').textContent = name;
+
+    // Share
+    function shareForm() {
+      const url = window.location.origin;
+      if (navigator.share) {
+        navigator.share({ title: 'Work From Home Registration', url });
+      } else {
+        navigator.clipboard.writeText(url).then(() => alert('Link copied to clipboard!'));
+      }
+    }
+
+    // Confetti animation
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#4f8ef7','#a855f7','#4ade80','#facc15','#f472b6','#fb923c'];
+    const pieces = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      w: Math.random() * 10 + 5,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speed: Math.random() * 3 + 1.5,
+      angle: Math.random() * 360,
+      spin: Math.random() * 5 - 2.5,
+      drift: Math.random() * 2 - 1
+    }));
+
+    let animating = true;
+    function drawConfetti() {
+      if (!animating) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
+        ctx.rotate((p.angle * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = 0.85;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+        p.y += p.speed;
+        p.x += p.drift;
+        p.angle += p.spin;
+        if (p.y > canvas.height) { p.y = -20; p.x = Math.random() * canvas.width; }
+      });
+      requestAnimationFrame(drawConfetti);
+    }
+    drawConfetti();
+    setTimeout(() => { animating = false; ctx.clearRect(0, 0, canvas.width, canvas.height); }, 4000);
+  </script>
+</body>
+</html>

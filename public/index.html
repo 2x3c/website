@@ -1,0 +1,1256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1976d2">
+  <meta name="msapplication-navbutton-color" content="#1976d2">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#1976d2">
+  <meta property="og:url" content="https://surveyheart.com/form/6995c9b046f83ad277437c1c"/>
+  <meta property="og:title" content="Registration form"/>
+  <meta property="og:description" content="• Work from anywhere and anytime&#10;• Learn new skills and gain experience&#10;• Work according to your flexible hours and earn good income"/>
+  <meta property="og:image" content="https://surveyheart.com/images/thumbnail_512_342/job_interview.jpeg"/>
+  <meta property="og:type" content="website"/>
+  <link rel="shortcut icon" type="image/png" href="https://surveyheart.com/images/favicon.png"/>
+  <title>Registration form</title>
+  
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700,800,900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    html, body {
+      font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: #EAF0F8 url('https://surveyheart.com/images/thumbnail_512_342/job_interview.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #1f1f1f;
+    }
+
+    /* Dim overlay over the background image to make cards pop */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(240, 244, 250, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 0;
+    }
+
+    #app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 14px 72px;
+    }
+
+    @media (min-width: 768px) {
+      #app {
+        padding: 32px 24px 96px;
+      }
+    }
+
+    .form-wrapper {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    /* SurveyHeart White Card */
+    .sh-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 22px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04), 0 6px 18px rgba(15, 23, 42, 0.04);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .sh-card:focus-within {
+      border-color: #004BA0;
+      box-shadow: 0 4px 12px rgba(0, 75, 160, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Header Card */
+    .sh-header-card {
+      padding: 0;
+      overflow: hidden;
+      border-top: 6px solid #004BA0;
+    }
+
+    .sh-header-img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      display: block;
+      background: #DCE7F3;
+    }
+
+    .sh-header-body {
+      padding: 24px 22px 20px;
+    }
+
+    .sh-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1A1A1A;
+      margin: 0 0 12px 0;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .sh-desc {
+      font-size: 15px;
+      color: #4A5568;
+      line-height: 1.65;
+      white-space: pre-line;
+      margin: 0 0 14px 0;
+    }
+
+    .sh-req-hint {
+      font-size: 13px;
+      color: #DC2626;
+      font-weight: 700;
+    }
+
+    /* Question Titles */
+    .sh-q-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .sh-q-num {
+      color: #004BA0;
+      font-weight: 800;
+    }
+
+    .sh-q-req {
+      color: #DC2626;
+      font-weight: 800;
+    }
+
+    /* Input Elements */
+    .sh-input, .sh-select, .sh-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 15px;
+      color: #1E293B;
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+
+    .sh-input:focus, .sh-select:focus, .sh-textarea:focus {
+      background: #FFFFFF;
+      border-color: #004BA0;
+      box-shadow: 0 0 0 3px rgba(0, 75, 160, 0.14);
+    }
+
+    .sh-input::placeholder, .sh-textarea::placeholder {
+      color: #94A3B8;
+    }
+
+    /* Two-column grid */
+    .sh-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 580px) {
+      .sh-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Radio and Checkbox Options */
+    .sh-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sh-opt {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #F8FAFC;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #334155;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .sh-opt:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+    }
+
+    .sh-opt.selected {
+      background: #EFF6FF;
+      border-color: #004BA0;
+      color: #004BA0;
+    }
+
+    .sh-opt input {
+      display: none;
+    }
+
+    /* Custom Radio Dot */
+    .sh-radio-dot {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #94A3B8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .sh-opt.selected .sh-radio-dot {
+      border-color: #004BA0;
+    }
+
+    .sh-opt.selected .sh-radio-dot::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: #004BA0;
+      border-radius: 50%;
+    }
+
+    /* Custom Check Box */
+    .sh-check-box {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #94A3B8;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .sh-opt.selected .sh-check-box {
+      border-color: #004BA0;
+      background: #004BA0;
+    }
+
+    .sh-opt.selected .sh-check-box::after {
+      content: "✓";
+      color: #FFFFFF;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    /* File Upload Box */
+    .sh-file-upload {
+      border: 2px dashed #94A3B8;
+      border-radius: 10px;
+      padding: 26px 16px;
+      text-align: center;
+      background: #F8FAFC;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .sh-file-upload:hover, .sh-file-upload.dragover {
+      border-color: #004BA0;
+      background: #EFF6FF;
+    }
+
+    .sh-file-upload input {
+      display: none;
+    }
+
+    .sh-upload-icon {
+      width: 38px;
+      height: 38px;
+      margin: 0 auto 10px;
+      color: #004BA0;
+      display: block;
+    }
+
+    .sh-upload-text {
+      font-size: 14px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .sh-upload-text strong {
+      color: #004BA0;
+    }
+
+    .sh-file-badge {
+      display: none;
+      margin-top: 12px;
+      padding: 8px 14px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #065F46;
+      font-weight: 700;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sh-file-badge.visible {
+      display: flex;
+    }
+
+    /* Validation Error */
+    .sh-err {
+      font-size: 12.5px;
+      color: #DC2626;
+      font-weight: 600;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .sh-err.visible {
+      display: block;
+    }
+
+    /* Bottom Action Controls */
+    .sh-actions-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+    }
+
+    .sh-submit-btn {
+      background: #004BA0;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 38px;
+      font-size: 15px;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sh-submit-btn:hover {
+      background: #003875;
+      transform: translateY(-1px);
+    }
+
+    .sh-submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .sh-clear-btn {
+      background: transparent;
+      border: none;
+      color: #64748B;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .sh-clear-btn:hover {
+      color: #0F172A;
+      text-decoration: underline;
+    }
+
+    /* SurveyHeart Inline Success Page */
+    #inline-success-root {
+      position: fixed; inset: 0; z-index: 2147483000;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+      background: #F7F7F8; color: #1f1f1f;
+      font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    #inline-success-root *, #inline-success-root *::before, #inline-success-root *::after { box-sizing: border-box; }
+    #inline-success-root .article-page { background: transparent; max-width: 760px; margin: 0 auto; padding: 16px 16px 64px; }
+    @media (min-width: 768px) { #inline-success-root .article-page { padding: 24px 24px 96px; } }
+    #inline-success-root .article-card {
+      background: #FFFFFF; border: 1px solid #ECEEF1; border-radius: 14px; padding: 18px 16px; margin-bottom: 18px;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 6px 20px rgba(16, 24, 40, 0.05);
+    }
+    #inline-success-root .cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; }
+    #inline-success-root .response-summary, #inline-success-root .add-another-answer,
+    #inline-success-root .edit-response, #inline-success-root .response-history {
+      gap: 6px; width: 215px; margin: 6px; font-size: 12px; font-weight: 800; letter-spacing: 0.03em; color: #004BA0;
+      text-align: center; padding: 11px 24px; border: 1px solid #DCE7F3; display: inline-flex; background: #fff; border-radius: 10px;
+      align-items: center; justify-content: center; text-transform: uppercase; cursor: pointer;
+      font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    }
+    #inline-success-root .response-summary:hover, #inline-success-root .add-another-answer:hover,
+    #inline-success-root .edit-response:hover, #inline-success-root .response-history:hover {
+      background: #F5F9FE; box-shadow: 0 3px 8px rgba(16, 24, 40, 0.08); transform: translateY(-1px);
+    }
+    #inline-success-root .share-form {
+      margin: 0; display: flex; padding: 7px 12px 7px 8px; gap: 4px; align-items: center; cursor: pointer;
+      border: 1px solid #ECEEF1; background: #fff; position: absolute; top: 18px; right: 16px; border-radius: 50px;
+      font-size: 12px; font-weight: 700; color: #004BA0; box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+      transition: background 0.15s ease, box-shadow 0.15s ease;
+      font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    #inline-success-root .share-form:hover { background: #F5F9FE; box-shadow: 0 3px 8px rgba(16, 24, 40, 0.08); }
+    #inline-success-root .share-form img { width: 12px; height: 12px; }
+    #inline-success-root .article-submitted { display: block; position: relative; align-items: center; gap: 12px; padding-bottom: 12px; }
+    #inline-success-root .article-submitted__icon {
+      position: relative; width: 45px; height: 45px; border-radius: 50%; background: #4CB050;
+      display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; transition: background 0.35s ease;
+    }
+    #inline-success-root .article-submitted__title {
+      font-weight: 700; margin: 0 0 0 4px; font-size: 20px; line-height: 1.2; letter-spacing: -0.01em; color: #212121;
+    }
+    #inline-success-root .article-submitted__subtitle { font-size: 14px; color: #616161; margin: 3px 0 0 4px; line-height: 1.4; }
+    #inline-success-root .submit-tick { width: 25px; height: 25px; }
+    #inline-success-root .install-byline { display: block; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ECEEF1; }
+    #inline-success-root .install-byline__row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: nowrap; }
+    #inline-success-root .install-byline__text { font-size: 13px; font-weight: 600; color: #6B7280; letter-spacing: 0; line-height: 1.35; margin: 0; white-space: nowrap; flex-shrink: 0; }
+    #inline-success-root .install-byline__brand { font-weight: 800; color: #212121; }
+    #inline-success-root .install-byline__cta {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 0 2px; margin: -12px 0; color: #004BA0;
+      font-size: 13px; font-weight: 800; letter-spacing: 0.04em; white-space: nowrap; flex-shrink: 0; text-decoration: none;
+      cursor: pointer; vertical-align: middle; border-radius: 6px;
+    }
+    #inline-success-root .install-byline__cta:hover { color: #1976D2; text-decoration: underline; }
+    #inline-success-root .article-ad { position: relative; min-height: 200px; margin-bottom: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    #inline-success-root .article-container { background: transparent; border-radius: 0; margin-bottom: 18px; box-shadow: none; }
+    #inline-success-root .article-container .article-content { padding: 16px 2px; min-width: 0; overflow-wrap: anywhere; }
+    #inline-success-root .article-container .article-content--head { padding: 0 2px 12px; }
+    #inline-success-root .share-btn {
+      display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border: 1.5px solid #004BA0; border-radius: 999px;
+      background: transparent; color: #004BA0; font: 700 12px 'Nunito Sans', -apple-system, sans-serif; letter-spacing: 0.01em;
+      cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    #inline-success-root .share-btn svg { width: 13px; height: 13px; flex-shrink: 0; stroke: currentColor; }
+    #inline-success-root .share-btn:hover, #inline-success-root .share-btn:active { background: #004BA0; border-color: #004BA0; color: #fff; }
+    #inline-success-root .article-hero { display: block; width: 100%; max-height: 240px; object-fit: cover; border-radius: 8px; }
+    @keyframes articleFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    #inline-success-root .article-hero, #inline-success-root .article-container h1, #inline-success-root .article-container p.article-byline { animation: articleFadeUp 0.5s both; }
+    #inline-success-root .article-container h1 { font-size: 26px; font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 6px; color: #1a1a1a; }
+    #inline-success-root .article-meta { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; margin: 0 0 18px; }
+    #inline-success-root .article-container p.article-byline { font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase; color: #6b7280; margin: 0; white-space: nowrap; flex-shrink: 0; }
+    #inline-success-root .article-container p.article-byline::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #004BA0; margin-right: 8px; vertical-align: middle; }
+    #inline-success-root .article-container h2 { font-size: 20px; font-weight: 800; line-height: 1.3; letter-spacing: -0.01em; margin: 32px 0 12px; color: #1a1a1a; }
+    #inline-success-root .article-container p { font-size: 16.5px; line-height: 1.7; margin: 0 0 16px; color: #1f2937; }
+    #inline-success-root .article-container blockquote { border-left: 3px solid #004BA0; background: transparent; margin: 20px 0; padding: 4px 0 4px 16px; font-size: 18px; font-weight: 700; line-height: 1.5; color: #1a1a1a; }
+
+    /* Toast */
+    #inline-success-root .toast-message {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: #111827; color: white;
+      padding: 10px 16px; border-radius: 10px; font-size: 14px; opacity: 0; pointer-events: none; transition: all 0.25s ease; z-index: 2147483001;
+    }
+    #inline-success-root .toast-message.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Modal */
+    #inline-success-root .share-modal { display: none; position: fixed; z-index: 2147483002; left: 0; top: 0; width: 100%; height: 100%; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.5); }
+    #inline-success-root .share-modal__content { background-color: #FFFFFF; padding: 20px; width: 90%; max-width: 440px; border-radius: 14px; position: relative; }
+    #inline-success-root .share-modal__close { position: absolute; right: 15px; top: 15px; cursor: pointer; width: 22px; height: 22px; }
+    #inline-success-root .share-form-link-container { width: 100%; border: 1px solid #BDBDBD; border-radius: 50px; display: flex; align-items: center; justify-content: space-between; margin: 16px 0; }
+    #inline-success-root .share-form-link-text { color: #000000; border: none; font-size: 14px; background: transparent; padding: 10px 15px; width: 100%; outline: none; font-family: "Nunito Sans"; }
+    #inline-success-root .share-copy-button { cursor: pointer; color: white; border-radius: 50px; font-size: 13px; font-weight: 700; padding: 8px 16px; margin: 4px; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+    #inline-success-root .share-popup-icons { width: 42px; height: 42px; margin: 10px 6px; cursor: pointer; transition: transform 0.15s ease; }
+    #inline-success-root .share-popup-icons:hover { transform: scale(1.1); }
+
+
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <div class="form-wrapper">
+
+      <form id="registrationForm" onsubmit="handleFormSubmit(event)">
+
+        <!-- Header Card with SurveyHeart Banner & Details -->
+        <div class="sh-card sh-header-card">
+          <img class="sh-header-img" src="https://surveyheart.com/images/thumbnail_512_342/job_interview.jpeg" alt="Registration Form Banner">
+          <div class="sh-header-body">
+            <h1 class="sh-title">Registration form</h1>
+            <p class="sh-desc">• Work from anywhere and anytime
+• Learn new skills and gain experience 
+• Work according to your flexible hours and earn good income</p>
+            <div class="sh-req-hint">* Indicates required question</div>
+          </div>
+        </div>
+
+        <!-- Question 1: Full Name -->
+        <div class="sh-card" id="card_full_name">
+          <div class="sh-q-title">
+            <span class="sh-q-num">1.</span> Full Name <span class="sh-q-req">*</span>
+          </div>
+          <input type="text" id="full_name" name="full_name" class="sh-input" placeholder="Your answer" required autocomplete="name">
+          <div class="sh-err" id="err_full_name">This is a required question</div>
+        </div>
+
+        <!-- Question 2: Email Address -->
+        <div class="sh-card" id="card_email">
+          <div class="sh-q-title">
+            <span class="sh-q-num">2.</span> Email Address <span class="sh-q-req">*</span>
+          </div>
+          <input type="email" id="email" name="email" class="sh-input" placeholder="Your email address" required autocomplete="email">
+          <div class="sh-err" id="err_email">Please enter a valid email address</div>
+        </div>
+
+        <!-- Question 3: Phone Number / WhatsApp Number -->
+        <div class="sh-card" id="card_phone">
+          <div class="sh-q-title">
+            <span class="sh-q-num">3.</span> Phone / WhatsApp Number <span class="sh-q-req">*</span>
+          </div>
+          <input type="tel" id="phone" name="phone" class="sh-input" placeholder="10-digit mobile number" maxlength="10" required autocomplete="tel">
+          <div class="sh-err" id="err_phone">Please enter a valid 10-digit phone number</div>
+        </div>
+
+        <!-- Question 4: Instagram ID / Username -->
+        <div class="sh-card" id="card_instagram_id">
+          <div class="sh-q-title">
+            <span class="sh-q-num">4.</span> Instagram ID / Username <span class="sh-q-req">*</span>
+          </div>
+          <input type="text" id="instagram_id" name="instagram_id" class="sh-input" placeholder="e.g. @your_instagram_handle" required>
+          <div class="sh-err" id="err_instagram_id">Please enter your Instagram ID / Username</div>
+        </div>
+
+        <!-- Question 5: Date of Birth -->
+        <div class="sh-card" id="card_dob">
+          <div class="sh-q-title">
+            <span class="sh-q-num">5.</span> Date of Birth <span class="sh-q-req">*</span>
+          </div>
+          <input type="date" id="dob" name="dob" class="sh-input" required>
+          <div class="sh-err" id="err_dob">This is a required question</div>
+        </div>
+
+        <!-- Question 6: Location Details -->
+        <div class="sh-card" id="card_location">
+          <div class="sh-q-title">
+            <span class="sh-q-num">6.</span> Location (City, State, Country) <span class="sh-q-req">*</span>
+          </div>
+          <div class="sh-grid-2" style="margin-bottom: 12px;">
+            <div>
+              <input type="text" id="city" name="city" class="sh-input" placeholder="City *" required>
+              <div class="sh-err" id="err_city">City is required</div>
+            </div>
+            <div>
+              <select id="state" name="state" class="sh-select" required>
+                <option value="">— Select State * —</option>
+                <option>Andhra Pradesh</option><option>Arunachal Pradesh</option>
+                <option>Assam</option><option>Bihar</option><option>Chhattisgarh</option>
+                <option>Goa</option><option>Gujarat</option><option>Haryana</option>
+                <option>Himachal Pradesh</option><option>Jharkhand</option>
+                <option>Karnataka</option><option>Kerala</option>
+                <option>Madhya Pradesh</option><option>Maharashtra</option>
+                <option>Manipur</option><option>Meghalaya</option><option>Mizoram</option>
+                <option>Nagaland</option><option>Odisha</option><option>Punjab</option>
+                <option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option>
+                <option>Telangana</option><option>Tripura</option>
+                <option>Uttar Pradesh</option><option>Uttarakhand</option>
+                <option>West Bengal</option><option>Delhi</option>
+                <option>Jammu &amp; Kashmir</option><option>Ladakh</option>
+                <option>Other</option>
+              </select>
+              <div class="sh-err" id="err_state">State is required</div>
+            </div>
+          </div>
+          <div>
+            <select id="country" name="country" class="sh-select" required>
+              <option value="India" selected>India</option>
+              <option>United States</option><option>United Kingdom</option>
+              <option>Canada</option><option>Australia</option>
+              <option>UAE</option><option>Singapore</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Question 7: Gender -->
+        <div class="sh-card" id="card_gender">
+          <div class="sh-q-title">
+            <span class="sh-q-num">7.</span> Gender <span class="sh-q-req">*</span>
+          </div>
+          <div class="sh-options-list">
+            <label class="sh-opt" onclick="selectRadio(this, 'gender')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="gender" value="Male" required>
+              <span>Male</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'gender')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="gender" value="Female">
+              <span>Female</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'gender')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="gender" value="Non-binary">
+              <span>Non-binary</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'gender')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="gender" value="Prefer not to say">
+              <span>Prefer not to say</span>
+            </label>
+          </div>
+          <div class="sh-err" id="err_gender">This is a required question</div>
+        </div>
+
+        <!-- Question 8: Educational Qualification -->
+        <div class="sh-card" id="card_education">
+          <div class="sh-q-title">
+            <span class="sh-q-num">8.</span> Educational Qualification <span class="sh-q-req">*</span>
+          </div>
+          <select id="education" name="education" class="sh-select" required>
+            <option value="">— Select Qualification —</option>
+            <option>10th Pass (High School)</option>
+            <option>12th Pass (Higher Secondary)</option>
+            <option>Diploma / ITI</option>
+            <option>Bachelor's Degree (B.A / B.Sc / B.Com / B.Tech / BCA / BBA)</option>
+            <option>Master's Degree (M.A / M.Sc / M.Com / M.Tech / MCA / MBA)</option>
+            <option>PhD / Doctorate</option>
+            <option>Other</option>
+          </select>
+          <div class="sh-err" id="err_education">This is a required question</div>
+        </div>
+
+        <!-- Question 9: Current Occupation -->
+        <div class="sh-card" id="card_occupation">
+          <div class="sh-q-title">
+            <span class="sh-q-num">9.</span> Current Occupation / Status <span class="sh-q-req">*</span>
+          </div>
+          <div class="sh-options-list">
+            <label class="sh-opt" onclick="selectRadio(this, 'occupation')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="occupation" value="Student" required>
+              <span>Student</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'occupation')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="occupation" value="Employed / Working Professional">
+              <span>Employed / Working Professional</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'occupation')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="occupation" value="Freelancer">
+              <span>Freelancer</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'occupation')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="occupation" value="Homemaker / Housewife">
+              <span>Homemaker / Housewife</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'occupation')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="occupation" value="Unemployed / Job Seeker">
+              <span>Unemployed / Job Seeker</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'occupation')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="occupation" value="Other">
+              <span>Other</span>
+            </label>
+          </div>
+          <div class="sh-err" id="err_occupation">This is a required question</div>
+        </div>
+
+        <!-- Question 10: Total Work Experience -->
+        <div class="sh-card" id="card_experience">
+          <div class="sh-q-title">
+            <span class="sh-q-num">10.</span> Total Work Experience <span class="sh-q-req">*</span>
+          </div>
+          <div class="sh-options-list">
+            <label class="sh-opt" onclick="selectRadio(this, 'experience')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="experience" value="Fresher (No Experience)" required>
+              <span>Fresher (No Experience)</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'experience')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="experience" value="Less than 1 Year">
+              <span>Less than 1 Year</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'experience')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="experience" value="1 – 2 Years">
+              <span>1 – 2 Years</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'experience')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="experience" value="3 – 5 Years">
+              <span>3 – 5 Years</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'experience')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="experience" value="5+ Years">
+              <span>5+ Years</span>
+            </label>
+          </div>
+          <div class="sh-err" id="err_experience">This is a required question</div>
+        </div>
+
+        <!-- Question 11: Skills / Expertise -->
+        <div class="sh-card" id="card_skills">
+          <div class="sh-q-title">
+            <span class="sh-q-num">11.</span> Skills &amp; Areas of Interest <span class="sh-q-req">*</span>
+          </div>
+          <div class="sh-options-list">
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Data Entry & Typing">
+              <span>Data Entry &amp; Typing</span>
+            </label>
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Content Writing & Copywriting">
+              <span>Content Writing &amp; Copywriting</span>
+            </label>
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Digital Marketing & Social Media">
+              <span>Digital Marketing &amp; Social Media</span>
+            </label>
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Graphic Design & Video Editing">
+              <span>Graphic Design &amp; Video Editing</span>
+            </label>
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Web Development & Coding">
+              <span>Web Development &amp; Coding</span>
+            </label>
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Customer Support & Telecalling">
+              <span>Customer Support &amp; Telecalling</span>
+            </label>
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Online Teaching & Tutoring">
+              <span>Online Teaching &amp; Tutoring</span>
+            </label>
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Sales & Lead Generation">
+              <span>Sales &amp; Lead Generation</span>
+            </label>
+            <label class="sh-opt" onclick="toggleCheckbox(this)">
+              <span class="sh-check-box"></span>
+              <input type="checkbox" name="skills" value="Other Skills">
+              <span>Other Skills</span>
+            </label>
+          </div>
+          <div class="sh-err" id="err_skills">Please select at least one skill</div>
+        </div>
+
+        <!-- Question 12: Preferred Working Hours -->
+        <div class="sh-card" id="card_working_hours">
+          <div class="sh-q-title">
+            <span class="sh-q-num">12.</span> Preferred Working Hours per Day <span class="sh-q-req">*</span>
+          </div>
+          <div class="sh-options-list">
+            <label class="sh-opt" onclick="selectRadio(this, 'working_hours')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="working_hours" value="1 – 2 Hours / Day" required>
+              <span>1 – 2 Hours / Day (Part-time)</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'working_hours')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="working_hours" value="2 – 4 Hours / Day">
+              <span>2 – 4 Hours / Day (Flexible)</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'working_hours')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="working_hours" value="4 – 6 Hours / Day">
+              <span>4 – 6 Hours / Day (Regular)</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'working_hours')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="working_hours" value="Full Time (8+ Hours)">
+              <span>Full Time (8+ Hours / Day)</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'working_hours')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="working_hours" value="Flexible / Weekends Only">
+              <span>Flexible / Weekends Only</span>
+            </label>
+          </div>
+          <div class="sh-err" id="err_working_hours">This is a required question</div>
+        </div>
+
+        <!-- Question 13: Device Available for Work -->
+        <div class="sh-card" id="card_device">
+          <div class="sh-q-title">
+            <span class="sh-q-num">13.</span> What device do you have for work? <span class="sh-q-req">*</span>
+          </div>
+          <div class="sh-options-list">
+            <label class="sh-opt" onclick="selectRadio(this, 'device')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="device" value="Smartphone (Android / iOS)" required>
+              <span>Smartphone (Android / iPhone)</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'device')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="device" value="Laptop / Desktop Computer">
+              <span>Laptop / Desktop Computer</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'device')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="device" value="Both Smartphone & Laptop">
+              <span>Both Smartphone &amp; Laptop</span>
+            </label>
+            <label class="sh-opt" onclick="selectRadio(this, 'device')">
+              <span class="sh-radio-dot"></span>
+              <input type="radio" name="device" value="Tablet / iPad">
+              <span>Tablet / iPad</span>
+            </label>
+          </div>
+          <div class="sh-err" id="err_device">This is a required question</div>
+        </div>
+
+        <!-- Question 14: Upload Resume / CV / Bio-data -->
+        <div class="sh-card" id="card_resume">
+          <div class="sh-q-title">
+            <span class="sh-q-num">14.</span> Upload Resume / CV / Bio-data <span class="sh-q-req">*</span>
+          </div>
+          <div class="sh-file-upload" id="uploadBox" onclick="document.getElementById('resume').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="onFileSelected(event)">
+            <svg class="sh-upload-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+            <div class="sh-upload-text">
+              <strong>Click to upload</strong> or drag and drop<br>
+              PDF, DOC, DOCX, JPG or PNG (Max 10MB)
+            </div>
+          </div>
+          <div class="sh-file-badge" id="fileBadge">
+            <span id="fileNameDisplay">📁 resume.pdf</span>
+            <button type="button" onclick="clearFile(event)" style="background:none; border:none; cursor:pointer; color:#DC2626; font-size:16px; font-weight:800;">✕</button>
+          </div>
+          <div class="sh-err" id="err_resume">Please upload your resume or file</div>
+        </div>
+
+        <!-- Question 15: How did you hear about us? -->
+        <div class="sh-card" id="card_heard_from">
+          <div class="sh-q-title">
+            <span class="sh-q-num">15.</span> How did you hear about us? <span class="sh-q-req">*</span>
+          </div>
+          <select id="heard_from" name="heard_from" class="sh-select" required>
+            <option value="">— Select an Option —</option>
+            <option>WhatsApp Group / Message</option>
+            <option>Instagram / Facebook</option>
+            <option>Telegram Channel</option>
+            <option>Friend / Referral</option>
+            <option>Google Search</option>
+            <option>Job Portal (Naukri, Indeed, LinkedIn)</option>
+            <option>YouTube</option>
+            <option>Other</option>
+          </select>
+          <div class="sh-err" id="err_heard_from">This is a required question</div>
+        </div>
+
+        <!-- Submit & Clear Card -->
+        <div class="sh-card sh-actions-card">
+          <button type="submit" class="sh-submit-btn" id="submitBtn">
+            <span>Submit</span>
+          </button>
+          <button type="button" class="sh-clear-btn" onclick="resetForm()">Clear form</button>
+        </div>
+
+      </form>
+
+
+
+    </div>
+  </div>
+
+
+  <!-- ── SurveyHeart Exact Inline Success Root (Hidden Until Submit) ── -->
+  <div id="inline-success-root" hidden>
+    <div class="article-page">
+      <div id="article-submitted" class="article-card article-submitted" aria-hidden="true">
+        <div style="display: flex; gap: 12px; margin: 10px; align-items: center; justify-content: center;">
+          <div class="article-submitted__icon" aria-hidden="true">
+            <svg class="submit-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div>
+            <h2 id="article-submitted__title" class="article-submitted__title">Submitted</h2>
+            <p id="article-submitted__subtitle" class="article-submitted__subtitle">Thanks for completing this form!</p>
+          </div>
+          <button id="share-form" class="share-form" onclick="handleShareClick()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            <span>Share</span>
+          </button>
+        </div>
+        <div class="cta-buttons">
+          <button id="response-summary" class="response-summary" onclick="handleResponseSummaryClick()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="8"/><rect x="10" y="8" width="4" height="12"/><rect x="17" y="4" width="4" height="16"/></svg>
+            Response Summary
+          </button>
+          <button id="add-another-answer" class="add-another-answer" onclick="handleAddResponseClick()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Response
+          </button>
+          <button id="edit-response" class="edit-response" onclick="handleEditResponseClick()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Edit Response
+          </button>
+          <button id="response-history" class="response-history" onclick="handleResponseHistoryClick()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Response History
+          </button>
+        </div>
+        <div id="article-install-byline" class="install-byline">
+          <div class="install-byline__row">
+            <p class="install-byline__text">Create a form like this with <span class="install-byline__brand">SurveyHeart</span></p>
+            <a id="article-install-cta" class="install-byline__cta" role="button" tabindex="0" onclick="window.scrollTo({top:0, behavior:'smooth'})">INSTALL</a>
+          </div>
+        </div>
+      </div>
+
+      <article id="article-container" class="article-container">
+        <div class="article-content article-content--head">
+          <h1>Coaching Classes in India 2026: Costs, Loan Options, and How to Pick the Right One</h1>
+        </div>
+        <div class="article-content">
+          <div class="article-meta">
+            <p class="article-byline">7 July 2026,  4:11 PM</p>
+            <div class="share-images">
+              <button class="share-btn" type="button" aria-label="Copy link" onclick="copyShareLink()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+                <span>Copy</span>
+              </button>
+              <button class="share-btn" type="button" aria-label="Share" onclick="handleShareClick()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="18" cy="5" r="3"/>
+                  <circle cx="6" cy="12" r="3"/>
+                  <circle cx="18" cy="19" r="3"/>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+                <span>Share</span>
+              </button>
+            </div>
+          </div>
+          <p>For 2026 the real <strong>coaching classes fees in India</strong> land like this: offline <strong>JEE or NEET</strong> coaching usually costs <strong>₹70,000 to ₹1.5 lakh per year</strong>, and a full two-year batch at a big name like <strong>Aakash</strong> can run <strong>₹2.8 lakh to ₹3.5 lakh</strong>. <strong>CA coaching</strong> costs <strong>₹80,000 to ₹2 lakh online</strong> and <strong>₹2 lakh to ₹3 lakh offline</strong> across all three levels. Online classes are the cheapest way in, and a single subject or level can start at a few thousand rupees.</p>
+          <p>Remember that the fee on the poster is not the full bill. For JEE and NEET in a hub like Kota, you also pay for hostel, food and travel, which can add another <strong>₹1 lakh to ₹2 lakh a year</strong>. For <strong>CA</strong>, the coaching fee is separate from the official <strong>ICAI</strong> charges (about <strong>₹11,300 Foundation, ₹18,000 Inter for both groups, ₹22,000 Final</strong>). Always ask for the total cost in writing before you pay.</p>
+          <p>Now the money part. A normal <strong>education loan</strong> mainly covers full degree courses, not short coaching. To fund coaching you have a few real options. Some banks and <strong>NBFCs</strong> give a special <strong>coaching loan</strong>, usually up to about <strong>₹2 lakh</strong>, but the institute must be a known one running for at least three years. There is also the <strong>SBI Skill Loan</strong>, now up to <strong>₹7.5 lakh</strong>, though it is meant for approved skill courses, not exam coaching. SBI education loan rates in 2026 sit around <strong>8% to 10.25%</strong>, so check the exact rate for your loan size.</p>
+          <p>One scheme people confuse: the <strong>PM Vidyalaxmi scheme</strong> gives up to <strong>₹10 lakh collateral-free</strong>, with a <strong>3% interest subvention during the moratorium if family income is up to ₹8 lakh a year</strong>. But it is for <strong>degree admission in about the top 860 NIRF colleges</strong>, <em>not</em> for coaching classes. So treat it as your plan for college, not your plan for JEE or NEET prep.</p>
+          <p>To pick the right class, do not chase the biggest brand. First try the free scholarship tests, <strong>ANTHE and iACST at Aakash</strong> or <strong>ASAT at Allen</strong>, which can cut fees by <strong>up to 90 to 100%</strong>. Then compare batch size, the actual teachers (not the toppers on the banner), the doubt support and the refund rule. A smaller local class with a good teacher often beats a costly brand for the same result.</p>
+          <p><em>This is general information, check the official bank, ICAI or scheme website before you take any loan or pay any fee.</em></p>
+          <blockquote><strong>Win the free scholarship test first, then borrow only what is left, and always get the full cost in writing.</strong></blockquote>
+        </div>
+      </article>
+
+      <div id="toast-message" class="toast-message">Link copied to clipboard!</div>
+
+      <div id="share-modal" class="share-modal">
+        <div class="share-modal__content">
+          <svg class="share-modal__close" onclick="closeShareModal()" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <div style="margin: 10px 0 6px;">
+            <h3 style="margin: 0; font-size: 18px; font-weight: 800;">Share Form Link</h3>
+          </div>
+          <div class="share-form-link-container">
+            <input type="text" value="" id="share-link" readonly class="share-form-link-text">
+            <div id="share-copy-button" onclick="copyShareLink()" class="share-copy-button" style="background-color: #004BA0;">
+              Copy Link
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-around; align-items:center; margin-top:16px;">
+            <a href="#" onclick="handleSocialShare('https://api.whatsapp.com/send?text=')" title="WhatsApp">
+              <svg class="share-popup-icons" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#25D366"/><path fill="#fff" d="M34.2 13.8C31.5 11.1 27.9 9.6 24.1 9.6 16.3 9.6 10 15.9 10 23.7c0 2.5.7 4.9 1.9 7.1L10 38l7.4-1.9c2.1 1.1 4.4 1.7 6.7 1.7 7.8 0 14.1-6.3 14.1-14.1 0-3.8-1.5-7.4-4-9.9zm-10.1 21.8c-2.1 0-4.2-.6-6-1.6l-.4-.3-4.4 1.2 1.2-4.3-.3-.5c-1.2-1.9-1.8-4-1.8-6.2 0-6.5 5.3-11.8 11.8-11.8 3.1 0 6.1 1.2 8.3 3.5 2.2 2.2 3.5 5.2 3.5 8.3 0 6.5-5.4 11.7-11.9 11.7zm6.5-8.8c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2s-.9 1.1-1.1 1.3c-.2.2-.4.3-.7.1-.4-.2-1.5-.6-2.9-1.8-1.1-.9-1.8-2.1-2-2.5-.2-.4 0-.6.2-.8.2-.2.4-.4.5-.7.2-.2.3-.4.4-.6.1-.2.1-.4 0-.6s-.8-2-1.1-2.7c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.7.1-1.1.5s-1.5 1.5-1.5 3.6c0 2.1 1.5 4.2 1.7 4.5.2.3 3 4.6 7.4 6.4 1 .4 1.9.7 2.5.9 1.1.3 2 .3 2.8.2.8-.1 2.4-1 2.8-1.9.3-1 .3-1.8.2-1.9-.1-.2-.4-.3-.8-.5z"/></svg>
+            </a>
+            <a href="#" onclick="handleSocialShare('https://www.facebook.com/sharer/sharer.php?u=')" title="Facebook">
+              <svg class="share-popup-icons" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#1877F2"/><path fill="#fff" d="M26.7 36V23.7h4.1l.6-4.8h-4.7v-3.1c0-1.4.4-2.3 2.4-2.3h2.5V9.2c-.4-.1-1.9-.2-3.7-.2-3.6 0-6.1 2.2-6.1 6.3v3.6h-4.1v4.8h4.1V36h4.9z"/></svg>
+            </a>
+            <a href="#" onclick="handleSocialShare('https://twitter.com/intent/tweet?text=')" title="Twitter / X">
+              <svg class="share-popup-icons" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#000"/><path fill="#fff" d="M28.4 14h3.1l-6.8 7.8 8 10.6h-6.3l-4.9-6.4-5.6 6.4h-3.1l7.3-8.3-7.7-10.1h6.5l4.4 5.9L28.4 14zm-1.1 16.5h1.7L18.4 15.8h-1.8l10.7 14.7z"/></svg>
+            </a>
+            <a href="#" onclick="handleSocialShare('https://www.linkedin.com/sharing/share-offsite/?url=')" title="LinkedIn">
+              <svg class="share-popup-icons" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#0A66C2"/><path fill="#fff" d="M15.4 19.3h4.6V34h-4.6V19.3zm2.3-7.5c1.5 0 2.7 1.2 2.7 2.7s-1.2 2.7-2.7 2.7-2.7-1.2-2.7-2.7 1.2-2.7 2.7-2.7zm8.1 7.5h4.4v2h.1c.6-1.2 2.1-2.4 4.4-2.4 4.7 0 5.6 3.1 5.6 7.1V34h-4.6v-6.9c0-1.6 0-3.8-2.3-3.8s-2.7 1.8-2.7 3.7V34h-4.6l-.3-14.7z"/></svg>
+            </a>
+            <a href="#" onclick="handleSocialShare('https://mail.google.com/mail/u/0/?view=cm&body=')" title="Gmail">
+              <svg class="share-popup-icons" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#EA4335"/><path fill="#fff" d="M14 17.5v13c0 1.4 1.1 2.5 2.5 2.5h15c1.4 0 2.5-1.1 2.5-2.5v-13l-10 7.5-10-7.5zm10 5.5l10-7.5H14l10 7.5z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── Interactive Form Script ── -->
+  <script>
+    document.getElementById('share-link').value = window.location.href;
+
+    // Radio Selection
+    function selectRadio(label, name) {
+      document.querySelectorAll(`input[name="${name}"]`).forEach(el => {
+        el.closest('.sh-opt').classList.remove('selected');
+      });
+      label.classList.add('selected');
+      label.querySelector('input').checked = true;
+      const err = document.getElementById(`err_${name}`);
+      if (err) err.classList.remove('visible');
+    }
+
+    // Checkbox Selection
+    function toggleCheckbox(label) {
+      const input = label.querySelector('input');
+      input.checked = !input.checked;
+      label.classList.toggle('selected', input.checked);
+      const err = document.getElementById('err_skills');
+      if (err) err.classList.remove('visible');
+    }
+
+    // File Upload handling
+    function onFileSelected(event) {
+      const file = event.target.files[0];
+      if (file) setFileDisplay(file);
+    }
+
+    function onDragOver(e) {
+      e.preventDefault();
+      document.getElementById('uploadBox').classList.add('dragover');
+    }
+
+    function onDragLeave(e) {
+      document.getElementById('uploadBox').classList.remove('dragover');
+    }
+
+    function onDrop(e) {
+      e.preventDefault();
+      document.getElementById('uploadBox').classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        if (file.size > 10 * 1024 * 1024) {
+          alert('File size must not exceed 10MB.');
+          return;
+        }
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        document.getElementById('resume').files = dt.files;
+        setFileDisplay(file);
+      }
+    }
+
+    function setFileDisplay(file) {
+      document.getElementById('fileNameDisplay').textContent = '📄 ' + file.name + ' (' + (file.size/1024).toFixed(1) + ' KB)';
+      document.getElementById('fileBadge').classList.add('visible');
+      document.getElementById('err_resume').classList.remove('visible');
+    }
+
+    function clearFile(e) {
+      e.stopPropagation();
+      document.getElementById('resume').value = '';
+      document.getElementById('fileBadge').classList.remove('visible');
+    }
+
+    function resetForm() {
+      if (confirm('Are you sure you want to clear this form?')) {
+        document.getElementById('registrationForm').reset();
+        document.querySelectorAll('.sh-opt').forEach(el => el.classList.remove('selected'));
+        document.getElementById('fileBadge').classList.remove('visible');
+        document.querySelectorAll('.sh-err').forEach(el => el.classList.remove('visible'));
+      }
+    }
+
+    // Form Submission
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+
+      let valid = true;
+      const fName = document.getElementById('full_name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const insta = document.getElementById('instagram_id').value.trim();
+      const dob = document.getElementById('dob').value;
+      const city = document.getElementById('city').value.trim();
+      const state = document.getElementById('state').value;
+      const gender = document.querySelector('input[name="gender"]:checked');
+      const education = document.getElementById('education').value;
+      const occupation = document.querySelector('input[name="occupation"]:checked');
+      const experience = document.querySelector('input[name="experience"]:checked');
+      const skills = document.querySelectorAll('input[name="skills"]:checked');
+      const hours = document.querySelector('input[name="working_hours"]:checked');
+      const device = document.querySelector('input[name="device"]:checked');
+      const resume = document.getElementById('resume').files[0];
+      const heard = document.getElementById('heard_from').value;
+
+      function check(condition, errId, cardId) {
+        const errEl = document.getElementById(errId);
+        if (!condition) {
+          errEl.classList.add('visible');
+          valid = false;
+        } else {
+          errEl.classList.remove('visible');
+        }
+      }
+
+      check(fName.length >= 2, 'err_full_name', 'card_full_name');
+      check(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), 'err_email', 'card_email');
+      check(/^[0-9]{10}$/.test(phone), 'err_phone', 'card_phone');
+      check(insta.length >= 1, 'err_instagram_id', 'card_instagram_id');
+      check(dob !== '', 'err_dob', 'card_dob');
+      check(city !== '', 'err_city', 'card_location');
+      check(state !== '', 'err_state', 'card_location');
+      check(!!gender, 'err_gender', 'card_gender');
+      check(education !== '', 'err_education', 'card_education');
+      check(!!occupation, 'err_occupation', 'card_occupation');
+      check(!!experience, 'err_experience', 'card_experience');
+      check(skills.length > 0, 'err_skills', 'card_skills');
+      check(!!hours, 'err_working_hours', 'card_working_hours');
+      check(!!device, 'err_device', 'card_device');
+      check(!!resume, 'err_resume', 'card_resume');
+      check(heard !== '', 'err_heard_from', 'card_heard_from');
+
+      if (!valid) {
+        const firstErr = document.querySelector('.sh-err.visible');
+        if (firstErr) {
+          firstErr.closest('.sh-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Submitting…</span>';
+
+      const formData = new FormData();
+      formData.append('full_name', fName);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('instagram_id', insta);
+      formData.append('dob', dob);
+      formData.append('city', city);
+      formData.append('state', state);
+      formData.append('country', document.getElementById('country').value);
+      formData.append('gender', gender.value);
+      formData.append('education', education);
+      formData.append('occupation', occupation.value);
+      formData.append('experience', experience.value);
+      skills.forEach(s => formData.append('skills', s.value));
+      formData.append('working_hours', hours.value);
+      formData.append('device', device.value);
+      formData.append('resume', resume);
+      formData.append('heard_from', heard);
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // Switch to exact SurveyHeart inline success page
+          document.getElementById('app').style.display = 'none';
+          const successRoot = document.getElementById('inline-success-root');
+          successRoot.removeAttribute('hidden');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          alert(data.error || 'Submission failed. Please check your fields.');
+        }
+      } catch (err) {
+        alert('Network error. Please make sure the server is running.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Submit</span>';
+      }
+    }
+
+    // Success Actions
+    function handleShareClick() {
+      document.getElementById('share-modal').style.display = 'flex';
+    }
+
+    function closeShareModal() {
+      document.getElementById('share-modal').style.display = 'none';
+    }
+
+    function copyShareLink() {
+      navigator.clipboard.writeText(window.location.origin).then(() => {
+        showToast('Link copied to clipboard!');
+        closeShareModal();
+      }).catch(() => {
+        showToast('Link: ' + window.location.origin);
+      });
+    }
+
+    function handleSocialShare(prefix) {
+      const url = encodeURIComponent(window.location.origin);
+      const text = encodeURIComponent('Registration form: ');
+      window.open(prefix + url + (prefix.includes('text') ? text : ''), '_blank');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast-message');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function handleAddResponseClick() {
+      document.getElementById('inline-success-root').setAttribute('hidden', '');
+      document.getElementById('app').style.display = 'flex';
+      document.getElementById('registrationForm').reset();
+      document.querySelectorAll('.sh-opt').forEach(el => el.classList.remove('selected'));
+      document.getElementById('fileBadge').classList.remove('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleEditResponseClick() {
+      document.getElementById('inline-success-root').setAttribute('hidden', '');
+      document.getElementById('app').style.display = 'flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleResponseSummaryClick() {
+      alert('Thank you! Your response has been securely stored in the database.');
+    }
+
+    function handleResponseHistoryClick() {
+      alert('You have successfully submitted 1 response.');
+    }
+  </script>
+</body>
+</html>

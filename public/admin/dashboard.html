@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Registration Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      position: fixed; left: 0; top: 0; bottom: 0;
+      width: 230px;
+      background: rgba(15,12,41,0.98);
+      border-right: 1px solid var(--glass-border);
+      display: flex; flex-direction: column;
+      padding: 24px 0;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 0 20px 24px;
+      border-bottom: 1px solid var(--glass-border);
+      margin-bottom: 16px;
+    }
+    .sidebar-logo h2 { font-size: 18px; margin-bottom: 2px; }
+    .sidebar-logo p { font-size: 12px; color: var(--text-muted); }
+    .sidebar-nav { flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 20px;
+      font-size: 14px; font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: all var(--transition);
+      text-decoration: none;
+    }
+    .nav-item:hover { color: var(--text-primary); background: var(--glass-hover); }
+    .nav-item.active { color: var(--accent-blue); border-left-color: var(--accent-blue); background: rgba(79,142,247,0.08); }
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--glass-border);
+    }
+    .admin-info { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .admin-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--accent-gradient);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900; color: #fff;
+    }
+    .admin-name { font-size: 13px; font-weight: 700; }
+    .admin-role { font-size: 11px; color: var(--text-muted); }
+
+    /* ── Main Content ── */
+    .main-content {
+      margin-left: 230px;
+      padding: 28px 28px 60px;
+      min-height: 100vh;
+    }
+
+    /* ── Top Bar ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
+    }
+    .topbar h1 { font-size: 24px; }
+    .topbar-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── Stats Grid ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── Table Section ── */
+    .table-section { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); overflow: hidden; }
+    .table-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; border-bottom: 1px solid var(--glass-border); gap: 12px; flex-wrap: wrap;
+    }
+    .table-toolbar h2 { font-size: 16px; }
+    .table-wrapper { overflow-x: auto; }
+    .table-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; color: var(--text-muted); flex-wrap: wrap; gap: 10px;
+    }
+    .pagination { display: flex; gap: 6px; align-items: center; }
+    .page-btn {
+      width: 32px; height: 32px; border-radius: var(--radius-sm);
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      color: var(--text-secondary); font-size: 13px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .page-btn:hover { background: var(--glass-hover); color: var(--text-primary); }
+    .page-btn.active { background: var(--accent-gradient); border-color: transparent; color: #fff; }
+
+    .empty-state {
+      padding: 60px 20px; text-align: center; color: var(--text-muted);
+    }
+    .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state p { font-size: 15px; }
+
+    /* ── Detail Modal ── */
+    .detail-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    @media (max-width: 520px) { .detail-grid { grid-template-columns: 1fr; } }
+
+    /* ── Mobile Sidebar Toggle ── */
+    .sidebar-toggle {
+      display: none; position: fixed; top: 16px; left: 16px; z-index: 200;
+      background: var(--accent-gradient); border: none; border-radius: var(--radius-sm);
+      color: #fff; padding: 8px; cursor: pointer;
+    }
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 99; backdrop-filter: blur(2px);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); transition: transform var(--transition); }
+      .sidebar.open { transform: none; }
+      .sidebar-overlay.open { display: block; }
+      .sidebar-toggle { display: flex; align-items: center; }
+      .main-content { margin-left: 0; padding: 70px 16px 60px; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .data-table th:nth-child(n+5), .data-table td:nth-child(n+5) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <h2>🗂️ <span class="gradient-text">Admin</span></h2>
+      <p>Registration Manager</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" href="#">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" href="/" target="_blank">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Form
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info">
+        <div class="admin-avatar" id="avatarInitial">A</div>
+        <div>
+          <div class="admin-name" id="sidebarUsername">Admin</div>
+          <div class="admin-role">Administrator</div>
+        </div>
+      </div>
+      <button class="btn btn-danger btn-sm" style="width:100%" onclick="logout()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div>
+        <h1>Dashboard</h1>
+        <p style="color:var(--text-muted);font-size:13px;margin-top:2px">Manage all registration submissions</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openPasswordModal()">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Change Password
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="exportCSV()">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="loadData()">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card"><div class="stat-label">Total Registrations</div><div class="stat-value gradient-text" id="statTotal">—</div><div class="stat-sub">All time</div></div>
+      <div class="stat-card"><div class="stat-label">Today</div><div class="stat-value" style="color:var(--accent-blue)" id="statToday">—</div><div class="stat-sub">New today</div></div>
+      <div class="stat-card"><div class="stat-label">This Week</div><div class="stat-value" style="color:var(--accent-purple)" id="statWeek">—</div><div class="stat-sub">Last 7 days</div></div>
+      <div class="stat-card"><div class="stat-label">This Month</div><div class="stat-value" style="color:var(--success)" id="statMonth">—</div><div class="stat-sub">Last 30 days</div></div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-section">
+      <div class="table-toolbar">
+        <h2>📋 All Submissions</h2>
+        <div class="search-box" style="width:260px">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" class="form-control" placeholder="Search name, email, city…" oninput="onSearch()" style="font-size:14px">
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table" id="dataTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th class="hide-mobile">City</th>
+              <th class="hide-mobile">Education</th>
+              <th class="hide-mobile">Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr><td colspan="8"><div class="empty-state"><div class="empty-icon">⏳</div><p>Loading data…</p></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        <span id="tableInfo">—</span>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Detail Modal ── -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Applicant Details</h3>
+        <button class="modal-close-btn" onclick="closeModal()">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" id="modalFooter"></div>
+    </div>
+  </div>
+
+  <!-- ── Confirm Delete Modal ── -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal-box" style="max-width:400px">
+      <div class="modal-header">
+        <h3>⚠️ Confirm Delete</h3>
+        <button class="modal-close-btn" onclick="closeDeleteModal()">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--text-secondary);font-size:15px">Are you sure you want to delete this registration? This action <strong style="color:var(--error)">cannot be undone</strong>.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger btn-sm" id="confirmDeleteBtn" onclick="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Change Password Modal ── -->
+  <div class="modal-overlay" id="passwordModal">
+    <div class="modal-box" style="max-width:440px">
+      <div class="modal-header">
+        <h3>🔐 Change Admin Password</h3>
+        <button class="modal-close-btn" onclick="closePasswordModal()">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form onsubmit="handlePasswordChange(event)">
+        <div class="modal-body" style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <label style="font-size:13px;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:6px">Current Password</label>
+            <input type="password" id="currentPassInput" class="form-control" placeholder="Enter current password" required>
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:6px">New Password (Min 6 chars)</label>
+            <input type="password" id="newPassInput" class="form-control" placeholder="Enter new custom password" minlength="6" required>
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:6px">Confirm New Password</label>
+            <input type="password" id="confirmPassInput" class="form-control" placeholder="Confirm new password" minlength="6" required>
+          </div>
+          <div id="passwordModalMsg" style="font-size:13px;display:none;padding:8px 12px;border-radius:6px;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closePasswordModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="savePasswordBtn">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openPasswordModal() {
+      document.getElementById('currentPassInput').value = '';
+      document.getElementById('newPassInput').value = '';
+      document.getElementById('confirmPassInput').value = '';
+      const msg = document.getElementById('passwordModalMsg');
+      msg.style.display = 'none';
+      document.getElementById('passwordModal').classList.add('open');
+    }
+
+    function closePasswordModal() {
+      document.getElementById('passwordModal').classList.remove('open');
+    }
+
+    async function handlePasswordChange(e) {
+      e.preventDefault();
+      const currentPassword = document.getElementById('currentPassInput').value;
+      const newPassword = document.getElementById('newPassInput').value;
+      const confirmPassword = document.getElementById('confirmPassInput').value;
+      const msg = document.getElementById('passwordModalMsg');
+      const btn = document.getElementById('savePasswordBtn');
+
+      if (newPassword !== confirmPassword) {
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(239, 68, 68, 0.15)';
+        msg.style.color = 'var(--error)';
+        msg.textContent = '❌ New passwords do not match.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Updating…';
+
+      try {
+        const res = await fetch('/api/admin/change-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          msg.style.display = 'block';
+          msg.style.background = 'rgba(16, 185, 129, 0.15)';
+          msg.style.color = 'var(--success)';
+          msg.textContent = '✅ ' + data.message;
+          setTimeout(() => {
+            closePasswordModal();
+          }, 2000);
+        } else {
+          msg.style.display = 'block';
+          msg.style.background = 'rgba(239, 68, 68, 0.15)';
+          msg.style.color = 'var(--error)';
+          msg.textContent = '❌ ' + (data.error || 'Failed to change password.');
+        }
+      } catch(err) {
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(239, 68, 68, 0.15)';
+        msg.style.color = 'var(--error)';
+        msg.textContent = '❌ Network error.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Update Password';
+      }
+    }
+    // ── Auth Guard ──
+    const token = localStorage.getItem('adminToken');
+    if (!token) window.location.href = '/admin/login.html';
+
+    const username = localStorage.getItem('adminUser') || 'Admin';
+    document.getElementById('sidebarUsername').textContent = username;
+    document.getElementById('avatarInitial').textContent = username[0].toUpperCase();
+
+    const API = (path) => fetch(path, { headers: { 'Authorization': 'Bearer ' + token } });
+
+    let currentPage = 1;
+    let totalRows = 0;
+    const LIMIT = 15;
+    let searchTimer = null;
+    let pendingDeleteId = null;
+
+    // ── Load Stats ──
+    async function loadStats() {
+      try {
+        const res = await API('/api/admin/stats');
+        if (res.status === 401 || res.status === 403) { logout(); return; }
+        const data = await res.json();
+        document.getElementById('statTotal').textContent = data.total;
+        document.getElementById('statToday').textContent = data.today;
+        document.getElementById('statWeek').textContent = data.week;
+        document.getElementById('statMonth').textContent = data.month;
+      } catch (e) { console.error('Stats error', e); }
+    }
+
+    // ── Load Table Data ──
+    async function loadData(page = 1) {
+      currentPage = page;
+      const search = document.getElementById('searchInput').value.trim();
+      const url = `/api/admin/responses?page=${page}&limit=${LIMIT}${search ? '&search=' + encodeURIComponent(search) : ''}`;
+
+      try {
+        const res = await API(url);
+        if (res.status === 401 || res.status === 403) { logout(); return; }
+        const data = await res.json();
+        totalRows = data.total;
+        renderTable(data.data);
+        renderPagination(data.total, page);
+        document.getElementById('tableInfo').textContent =
+          data.total === 0 ? 'No results found' :
+          `Showing ${(page-1)*LIMIT+1}–${Math.min(page*LIMIT, data.total)} of ${data.total} registrations`;
+      } catch (e) {
+        document.getElementById('tableBody').innerHTML =
+          `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">❌</div><p>Failed to load data.</p></div></td></tr>`;
+      }
+    }
+
+    function renderTable(rows) {
+      const tbody = document.getElementById('tableBody');
+      if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📭</div><p>No registrations found.</p></div></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = rows.map((r, i) => `
+        <tr>
+          <td style="color:var(--text-muted);font-size:12px">${(currentPage-1)*LIMIT + i + 1}</td>
+          <td class="name-cell">${esc(r.full_name)}</td>
+          <td>${esc(r.email)}</td>
+          <td>${esc(r.phone)}</td>
+          <td class="hide-mobile">${esc(r.city)}, ${esc(r.state)}</td>
+          <td class="hide-mobile"><span class="badge badge-blue">${esc(r.education.split(' ')[0])}</span></td>
+          <td class="hide-mobile" style="font-size:12px">${formatDate(r.submitted_at)}</td>
+          <td>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn btn-secondary btn-sm" onclick="viewDetail('${r.id}')">View</button>
+              ${r.resume_path ? `<button class="btn btn-secondary btn-sm" onclick="downloadResume('${r.id}')">📎</button>` : ''}
+              <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${r.id}')">🗑</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderPagination(total, page) {
+      const pages = Math.ceil(total / LIMIT);
+      const pag = document.getElementById('pagination');
+      if (pages <= 1) { pag.innerHTML = ''; return; }
+
+      let html = '';
+      if (page > 1) html += `<button class="page-btn" onclick="loadData(${page-1})">‹</button>`;
+      for (let p = Math.max(1, page-2); p <= Math.min(pages, page+2); p++) {
+        html += `<button class="page-btn ${p===page?'active':''}" onclick="loadData(${p})">${p}</button>`;
+      }
+      if (page < pages) html += `<button class="page-btn" onclick="loadData(${page+1})">›</button>`;
+      pag.innerHTML = html;
+    }
+
+    // ── Search ──
+    function onSearch() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => loadData(1), 350);
+    }
+
+    // ── View Detail Modal ──
+    async function viewDetail(id) {
+      try {
+        const res = await API(`/api/admin/responses/${id}`);
+        const { data: r } = await res.json();
+        document.getElementById('modalTitle').textContent = r.full_name;
+        document.getElementById('modalBody').innerHTML = `
+          <div class="detail-grid">
+            ${detail('Full Name', r.full_name)}
+            ${detail('Email', r.email)}
+            ${detail('Phone', r.phone)}
+            ${detail('Date of Birth', r.dob)}
+            ${detail('Instagram ID', r.instagram_id || '—')}
+            ${detail('Location', `${r.city}, ${r.state}, ${r.country}`)}
+            ${detail('Gender', r.gender)}
+            ${detail('Education', r.education)}
+            ${detail('Experience', r.experience)}
+            ${detail('Working Hours', r.working_hours)}
+            ${detail('Heard From', r.heard_from)}
+            ${detail('Submitted At', formatDate(r.submitted_at))}
+            ${detail('Resume', r.resume_original_name || '—')}
+          </div>
+          <div style="margin-top:16px">
+            <div class="detail-row" style="border:none;flex-direction:column;gap:8px">
+              <span class="detail-key">Skills</span>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                ${r.skills.split(', ').map(s => `<span class="badge badge-purple">${esc(s)}</span>`).join('')}
+              </div>
+            </div>
+          </div>`;
+
+        document.getElementById('modalFooter').innerHTML = `
+          ${r.resume_path ? `<button class="btn btn-secondary btn-sm" onclick="downloadResume('${r.id}')">📎 Download Resume</button>` : ''}
+          <button class="btn btn-danger btn-sm" onclick="closeModal();openDeleteModal('${r.id}')">🗑 Delete</button>
+          <button class="btn btn-primary btn-sm" onclick="closeModal()">Close</button>`;
+
+        document.getElementById('detailModal').classList.add('open');
+      } catch(e) { alert('Failed to load details.'); }
+    }
+
+    function detail(key, val) {
+      return `<div class="detail-row"><span class="detail-key">${key}</span><span class="detail-val">${esc(String(val||'—'))}</span></div>`;
+    }
+
+    function closeModal() { document.getElementById('detailModal').classList.remove('open'); }
+
+    // ── Delete ──
+    function openDeleteModal(id) {
+      pendingDeleteId = id;
+      document.getElementById('deleteModal').classList.add('open');
+    }
+    function closeDeleteModal() {
+      pendingDeleteId = null;
+      document.getElementById('deleteModal').classList.remove('open');
+    }
+    async function confirmDelete() {
+      if (!pendingDeleteId) return;
+      const btn = document.getElementById('confirmDeleteBtn');
+      btn.disabled = true; btn.textContent = 'Deleting…';
+      try {
+        const res = await fetch(`/api/admin/responses/${pendingDeleteId}`, {
+          method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeDeleteModal();
+          loadData(currentPage);
+          loadStats();
+        } else { alert(data.error || 'Failed to delete.'); }
+      } catch(e) { alert('Network error.'); }
+      finally { btn.disabled = false; btn.textContent = 'Delete'; }
+    }
+
+    // ── Download Resume ──
+    function downloadResume(id) {
+      window.open(`/api/admin/download/${id}?token=${token}`, '_blank');
+    }
+
+    // ── Export CSV ──
+    function exportCSV() {
+      window.open(`/api/admin/export?token=${token}`, '_blank');
+    }
+
+    // ── Logout ──
+    function logout() {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+      window.location.href = '/admin/login.html';
+    }
+
+    // ── Mobile sidebar ──
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('open');
+    }
+
+    // ── Helpers ──
+    function esc(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function formatDate(str) {
+      if (!str) return '—';
+      const d = new Date(str);
+      return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    }
+
+    // Support token in query param for file downloads
+    const urlToken = new URLSearchParams(window.location.search).get('token');
+    if (urlToken) localStorage.setItem('adminToken', urlToken);
+
+    // Fix download/export to use auth header via redirect workaround
+    // (browsers don't send Authorization header for window.open — use cookie fallback below)
+
+    // ── Init ──
+    loadStats();
+    loadData(1);
+  </script>
+</body>
+</html>
