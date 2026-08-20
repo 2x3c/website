@@ -158,11 +158,25 @@ router.get('/download/:id', auth, (req, res) => {
 
   const p1 = path.join('/tmp', 'uploads', row.resume_path);
   const p2 = path.join(__dirname, '../uploads', row.resume_path);
-  const filePath = fs.existsSync(p1) ? p1 : p2;
+  const filePath = fs.existsSync(p1) ? p1 : (fs.existsSync(p2) ? p2 : null);
 
-  if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'File not found on disk.' });
+  if (filePath && fs.existsSync(filePath)) {
+    return res.download(filePath, row.resume_original_name || row.resume_path);
+  }
 
-  res.download(filePath, row.resume_original_name || row.resume_path);
+  // Fallback to base64 in responses_json if disk file is absent (Vercel Serverless)
+  try {
+    const meta = JSON.parse(row.responses_json || '{}');
+    if (meta.resume_base64) {
+      const fileBuffer = Buffer.from(meta.resume_base64, 'base64');
+      const filename = row.resume_original_name || 'resume.pdf';
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Type', 'application/octet-stream');
+      return res.send(fileBuffer);
+    }
+  } catch (e) {}
+
+  res.status(404).json({ error: 'File not found on disk.' });
 });
 
 // GET /api/admin/export — Export all as CSV
