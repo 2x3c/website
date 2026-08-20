@@ -1179,19 +1179,22 @@
           method: 'POST',
           body: formData
         });
-        const data = await res.json();
 
-        if (data.success) {
+        const text = await res.text();
+        let data = {};
+        try { data = JSON.parse(text); } catch (e) {}
+
+        if (res.ok && data.success) {
           // Switch to exact SurveyHeart inline success page
           document.getElementById('app').style.display = 'none';
           const successRoot = document.getElementById('inline-success-root');
           successRoot.removeAttribute('hidden');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-          alert(data.error || 'Submission failed. Please check your fields.');
+          alert(data.error || ('Submission failed (HTTP ' + res.status + ')'));
         }
       } catch (err) {
-        alert('Network error. Please make sure the server is running.');
+        alert('Network connection error: ' + (err.message || 'Please check your connection.'));
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<span>Submit</span>';
