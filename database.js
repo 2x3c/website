@@ -207,38 +207,6 @@ class JSONDb {
   }
 }
 
-// Try native better-sqlite3 locally; fallback to JSONDb on Vercel or when C++ compilation is missing
-let db;
-try {
-  if (isVercel) throw new Error('Use JSONDb on Vercel');
-  const Database = require('better-sqlite3');
-  db = new Database(path.join(__dirname, 'registrations.db'));
-  db.pragma('journal_mode = WAL');
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS registrations (
-      id TEXT PRIMARY KEY,
-      full_name TEXT, email TEXT, phone TEXT, dob TEXT, city TEXT, state TEXT, country TEXT,
-      gender TEXT, instagram_id TEXT, education TEXT, experience TEXT, skills TEXT, working_hours TEXT,
-      resume_path TEXT, resume_original_name TEXT, heard_from TEXT, responses_json TEXT,
-      submitted_at TEXT NOT NULL DEFAULT (datetime('now'))
-    )
-  `);
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS admin_users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT UNIQUE NOT NULL,
-      password_hash TEXT NOT NULL,
-      created_at TEXT NOT NULL DEFAULT (datetime('now'))
-    )
-  `);
-  const anyAdminExists = db.prepare('SELECT id FROM admin_users LIMIT 1').get();
-  if (!anyAdminExists) {
-    const hash = bcrypt.hashSync('U5bpUGHz01E7u2', 10);
-    db.prepare('INSERT INTO admin_users (username, password_hash) VALUES (?, ?)').run('trishan', hash);
-  }
-} catch (err) {
-  console.log('ℹ️ Running in Serverless / Fallback DB Mode (Universal JS DB)');
-  db = new JSONDb(dbPath);
-}
+const db = new JSONDb(dbPath);
 
 module.exports = db;
